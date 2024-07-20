@@ -10,6 +10,7 @@ export const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const getData = async () => {
@@ -18,6 +19,7 @@ export const App = () => {
         setIsError(false);
         const response = await fetchNews(query, 5);
         setHits((prev) => [...prev, ...response.hits]);
+        setTotal(response.nbPages);
       } catch (error) {
         console.log(error);
         setIsError(true);
@@ -27,9 +29,16 @@ export const App = () => {
     };
     getData();
   }, [query, page]);
+
+  const handleSetQuery = (query) => {
+    setQuery(query);
+    setHits([]);
+    setPage(0);
+  };
   return (
     <div>
-      <SearchBar setQuery={setQuery} />
+      {total > page && !isLoading && <button onClick={() => setPage((prev) => prev + 1)}>Load more</button>]}
+      <SearchBar setQuery={handleSetQuery} />
       {isLoading && (
         <LineWave
           visible={true}
@@ -46,7 +55,7 @@ export const App = () => {
       )}
       {isError && <p>Something went wrong! Try again...</p>}
       <List items={hits} />
-      <button onClick={() => setPage((prev) => prev + 1)}>Load more</button>
+      
     </div>
   );
 };
