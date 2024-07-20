@@ -30,6 +30,7 @@ export const App = () => {
     getData();
   }, [query, page]);
 
+
   const handleSetQuery = (query) => {
     setQuery(query);
     setHits([]);
@@ -53,7 +54,7 @@ export const App = () => {
           lastLineColor=""
         />
       )}
-      {isError && <p>Something went wrong! Try again...</p>}
+      {isError && <p>Something went wrong! try again...</p>}
       <List items={hits} />
       
     </div>
