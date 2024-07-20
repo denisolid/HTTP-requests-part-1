@@ -54,7 +54,7 @@ export const App = () => {
           lastLineColor=""
         />
       )}
-      {isError && <p>Something went wrong! try again...</p>}
+      {isError && <p>Something went wrong! Try again...</p>}
       <List items={hits} />
       
     </div>
